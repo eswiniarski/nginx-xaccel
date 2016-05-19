@@ -1,0 +1,26 @@
+server {
+    listen       80;
+    server_name	xaccel.example.com;
+
+    set  $docroot     /var/www/xaccel/public;
+	root $docroot;
+	index  index.php index.html;
+
+	access_log  /var/log/nginx/xaccel.access.log;
+	error_log   /var/log/nginx/xaccel.error.log;
+
+	charset utf-8;
+
+    location /protected {
+        internal;
+        alias /var/www/xaccel/files;
+    }
+
+    location ~ \.php$ {
+        try_files $uri = 404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+       	include fastcgi_params;
+    }
+}

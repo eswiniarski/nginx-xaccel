@@ -1,2 +1,2 @@
 #Nginx xaccel example
-This is example configuration for nginx X-Accel
+This is example usage of nginx X-Accel
